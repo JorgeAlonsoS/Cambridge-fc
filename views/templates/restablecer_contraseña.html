@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restablecer Contraseña - Cambridge FC</title>
+    <link rel="icon" href="../static/img/CAMBRIDGE F.C..jpg" type="image/jpg">
+    <link rel="stylesheet" href="../static/restablecer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="/static/app.js"></script>
+    <style>
+        /* Estilos para el botón de volver al inicio */
+        .back-to-home {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(45deg, #FF6B2B, #FF8F2B);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 43, 0.3);
+            z-index: 1000;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(255, 107, 43, 0.4);
+        }
+
+        .back-to-home i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .back-to-home:hover i {
+            transform: scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .back-to-home.animate {
+            animation: bounce 2s infinite;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Restablecer Contraseña</h1>
+
+        <!-- Mensajes flash para errores o éxito -->
+        {% with messages = get_flashed_messages flashed_messages flashed_messages(category_filter['success', 'error') %}
+        {% if messages %}
+            <div class="flash-message {{ 'success' if 'success' in messages[0] else 'error' }}">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Formulario de reestablecimiento de contraseña -->
+        <form method="POST">
+            <label for="nueva_contraseña">Nueva Contraseña:</label>
+            <div class="form-group passaword-group">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="nueva_contraseña" name="nueva_contraseña" placeholder="Introduce tu nueva contraseña" required>
+                <i class="toogle-password" id="tooglePassword"></i>
+            </div>
+            <label for="confirmar_contraseña">Confirmar Contraseña:</label>
+            <div class="form-group passaword-group">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="confirmar_contraseña" name="confirmar_contraseña" placeholder="Confirma tu nueva contraseña" required>
+                <i class="toogle-password" id="tooglePassword2"></i>
+            </div>
+            <button type="submit">Restablecer Contraseña</button>
+        </form>
+        <p> <a href="/views/templates/login.html">Volver al Inicio de Sesión</a></p>
+        
+    </div>
+    <!-- Botón para volver al inicio -->
+    <a href="index.html" class="back-to-home animate" title="Volver al inicio">
+        <i class="fas fa-home"></i>
+    </a>
+    <script>
+        const togglePassword = document.getElementById('#tooglePassword');
+        const password = document.getElementById('nueva_contraseña');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+            });
+    </script>
+
+</body>
+</html>

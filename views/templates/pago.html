@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagos - Cambridge FC</title>
+    <link rel="icon" href="../static/img/CAMBRIDGE F.C..jpg" type="image/jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .payment-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #f97316;
+            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.1), 0 10px 10px -5px rgba(249, 115, 22, 0.04);
+        }
+
+        .bank-option {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bank-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(249, 115, 22, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bank-option:hover::before {
+            opacity: 1;
+        }
+
+        .bank-option:hover {
+            transform: translateX(8px);
+            border-color: #f97316;
+            box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.1), 0 2px 4px -1px rgba(249, 115, 22, 0.06);
+        }
+
+        .bank-logo {
+            filter: grayscale(100%);
+            transition: all 0.4s ease;
+            transform-origin: center;
+        }
+
+        .bank-option:hover .bank-logo {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        .copy-button,
+        .payment-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-button:hover,
+        .payment-button:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .copy-button:active,
+        .payment-button:active {
+            transform: translateY(1px);
+        }
+
+        .payment-button {
+            background: linear-gradient(45deg, #f97316 0%, #fb923c 100%);
+            box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2);
+            width: auto;
+            min-width: 180px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .payment-button:hover {
+            background: linear-gradient(45deg, #fb923c 0%, #fdba74 100%);
+            box-shadow: 0 6px 8px -1px rgba(249, 115, 22, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .payment-button:active {
+            transform: translateY(1px);
+        }
+
+        .payment-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .payment-button:hover i {
+            transform: translateX(4px);
+        }
+
+        .floating-icon {
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .floating-icon::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 4px;
+            background: rgba(249, 115, 22, 0.2);
+            border-radius: 50%;
+            animation: shadow 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes shadow {
+
+            0%,
+            100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateX(-50%) scale(0.8);
+                opacity: 0.1;
+            }
+        }
+
+        .payment-steps li {
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .payment-steps li:hover {
+            transform: translateX(15px);
+            background-color: rgba(249, 115, 22, 0.05);
+        }
+
+        /* Estilos para el botón de volver al inicio */
+        .back-to-home {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(45deg, #FF6B2B, #FF8F2B);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 43, 0.3);
+            z-index: 1000;
+        }
+
+        .back-to-home:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(255, 107, 43, 0.4);
+        }
+
+        .back-to-home i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .back-to-home:hover i {
+            transform: scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .back-to-home.animate {
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <img src="../static/img/CAMBRIDGE F.C..jpg" alt="Logo" class="h-8 w-auto">
+                    <span class="ml-4 text-xl font-bold text-gray-900">Sistema de Pagos</span>
+                </div>
+                <div class="flex items-center">
+                    <a href="../templates/index.html" class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-home mr-2"></i>Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Realiza tu pago de forma segura</h1>
+            <p class="text-xl text-gray-600">Elige el concepto de pago y el método que prefieras</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Matrícula -->
+            <div class="payment-card bg-white rounded-xl shadow-lg p-6">
+                <div class="text-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 floating-icon">
+                        <i class="fas fa-user-plus text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900">Matrícula</h3>
+                    <p class="text-gray-600 mt-2">Pago de matrícula para nuevos jugadores</p>
+                    <p class="text-2xl font-bold text-orange-600 mt-4">$150.000</p>
+                </div>
+                <button onclick="showBanks('matricula')"
+                    class="pse-button block w-full bg-orange-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-orange-700">
+                    Pagar Ahora
+                </button>
+                <div id="banks-matricula" class="bank-select mt-4 hidden">
+                    <div class="text-sm text-gray-600 mb-4">Selecciona tu método de pago:</div>
+
+                    <!-- Nequi -->
+                    <div class="bank-option p-4 rounded-lg border border-gray-200 backdrop-blur-sm mt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center">
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-0 bg-orange-100 rounded-full filter blur-md transform scale-110 opacity-50">
+                                    </div>
+                                    <img src="../static/img/Logo-Nequi.jpg" alt="Nequi"
+                                        class="bank-logo h-8 w-auto mr-3 relative z-10">
+                                </div>
+                                <span class="font-semibold text-gray-800">Nequi</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <a href="nequi://send?phone=573173419829&value=150000"
+                                    class="payment-button text-white">
+                                    <span>Pagar con Nequi</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-orange-50 to-transparent p-4 rounded-lg">
+                            <p class="text-sm text-gray-600">Número: <span class="font-medium select-all">317 341
+                                    9829</span></p>
+                        </div>
+
+                        <button onclick="copyNumber('3173419829')"
+                            class="copy-button bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-100 flex items-center">
+                            <i class="fas fa-copy mr-2"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+
+                    <!-- Bancolombia -->
+                    <div class="bank-option p-4 rounded-lg border border-gray-200 backdrop-blur-sm mt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center">
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-0 bg-orange-100 rounded-full filter blur-md transform scale-110 opacity-50">
+                                    </div>
+                                    <img src="../static/img/Bancolombia-Icon-Logo-Vector.svg-.png" alt="Bancolombia"
+                                        class="bank-logo h-8 w-auto mr-3 relative z-10">
+                                </div>
+                                <span class="font-semibold text-gray-800">Bancolombia</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+
+                                <a href="bancolombia://transfer?accountType=savings&account=3154369571&value=150000"
+                                    class="payment-button text-white">
+                                    <span>Pagar con App</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-orange-50 to-transparent p-4 rounded-lg">
+                            <p class="text-sm text-gray-600">Cuenta de Ahorros: <span class="font-medium select-all">315
+                                    436 9571</span></p>
+                            <p class="text-sm text-gray-600 mt-1">Titular: Cambridge FC</p>
+                        </div>
+                        <button onclick="copyNumber('3154369571')"
+                            class="copy-button bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-100 flex items-center">
+                            <i class="fas fa-copy mr-2"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+
+                    <!-- Crediservir -->
+                    <div class="bank-option p-4 rounded-lg border border-gray-200 backdrop-blur-sm mt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center">
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-0 bg-orange-100 rounded-full filter blur-md transform scale-110 opacity-50">
+                                    </div>
+                                    <img src="../static/img/Crediservir.jpg" alt="Crediservir"
+                                        class="bank-logo h-8 w-auto mr-3 relative z-10">
+                                </div>
+                                <span class="font-semibold text-gray-800">Crediservir</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <a href="https://www.crediservir.coop/personas/productos-y-servicios/canales-electronicos/portal-transaccional"
+                                    target="_blank" class="payment-button text-white">
+                                    <span>Ir al Portal</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-orange-50 to-transparent p-4 rounded-lg">
+                            <p class="text-sm text-gray-600">Cuenta de Ahorros: <span class="font-medium select-all">317
+                                    341 9829</span></p>
+                            <p class="text-sm text-gray-600 mt-1">Titular: Cambridge FC</p>
+                        </div>
+                        <button onclick="copyNumber('3173419829')"
+                            class="copy-button bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-100 flex items-center">
+                            <i class="fas fa-copy mr-2"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-orange-50 rounded-lg">
+                        <h4 class="font-semibold text-orange-800 mb-3">Instrucciones de pago:</h4>
+                        <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2">
+                            <li>Selecciona tu método de pago preferido</li>
+                            <li>Realiza la transferencia por el valor exacto</li>
+                            <li>En el mensaje/referencia escribe: "Matrícula - [Nombre del jugador]"</li>
+                            <li>Guarda el comprobante de pago</li>
+                            <li>Envía el comprobante al siguiente WhatsApp:
+                                <a href="https://wa.me/573173419829" class="text-orange-600 hover:text-orange-700">
+                                    <i class="fab fa-whatsapp"></i> 317 341 9829
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensualidad -->
+            <div class="payment-card bg-white rounded-xl shadow-lg p-6">
+                <div class="text-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 floating-icon">
+                        <i class="fas fa-calendar-alt text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900">Mensualidad</h3>
+                    <p class="text-gray-600 mt-2">Pago mensual de entrenamiento</p>
+                    <p class="text-2xl font-bold text-orange-600 mt-4">$100.000</p>
+                </div>
+                <button onclick="showBanks('mensualidad')"
+                    class="pse-button block w-full bg-orange-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-orange-700">
+                    Pagar Ahora
+                </button>
+                <div id="banks-mensualidad" class="bank-select mt-4 hidden">
+                    <!-- Mismo contenido que matrícula pero con mensaje diferente -->
+                </div>
+            </div>
+
+            <!-- Uniforme -->
+            <div class="payment-card bg-white rounded-xl shadow-lg p-6">
+                <div class="text-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 floating-icon">
+                        <i class="fas fa-tshirt text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900">Uniforme</h3>
+                    <p class="text-gray-600 mt-2">Pago de uniforme completo</p>
+                    <p class="text-2xl font-bold text-orange-600 mt-4">$80.000</p>
+                </div>
+                <button onclick="showBanks('uniforme')"
+                    class="pse-button block w-full bg-orange-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-orange-700">
+                    Pagar Ahora
+                </button>
+                <div id="banks-uniforme" class="bank-select mt-4 hidden">
+                    <!-- Mismo contenido que matrícula pero con mensaje diferente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="mt-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="max-w-3xl mx-auto">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Información Importante</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">Proceso de Pago</h4>
+                            <ul class="payment-steps space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Selecciona el concepto de pago</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Elige tu método de pago preferido</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Realiza la transferencia</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Envía el comprobante por WhatsApp</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">Notas Importantes</h4>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-info-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Los pagos se confirman en horario de oficina (8 AM - 5 PM)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-info-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Guarda siempre tu comprobante de pago</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-info-circle text-orange-600 mt-1 mr-2"></i>
+                                    <span>Para consultas sobre pagos, contáctanos por WhatsApp</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para volver al inicio -->
+    <a href="index.html" class="back-to-home animate" title="Volver al inicio">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <script>
+        function showBanks(section) {
+            // Ocultar todas las secciones de bancos
+            document.querySelectorAll('.bank-select').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Mostrar la sección seleccionada
+            const selectedSection = document.getElementById(`banks-${section}`);
+            selectedSection.classList.remove('hidden');
+
+            // Scroll suave hasta la sección
+            selectedSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyNumber(number) {
+            navigator.clipboard.writeText(number).then(() => {
+                // Mostrar notificación
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300';
+                notification.textContent = '¡Número copiado al portapapeles!';
+                document.body.appendChild(notification);
+
+                // Eliminar notificación después de 2 segundos
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(200%)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            });
+        }
+
+        // Clonar las opciones de banco para mensualidad y uniforme
+        document.addEventListener('DOMContentLoaded', () => {
+            const matriculaContent = document.getElementById('banks-matricula').innerHTML;
+            document.getElementById('banks-mensualidad').innerHTML = matriculaContent;
+            document.getElementById('banks-uniforme').innerHTML = matriculaContent;
+        });
+    </script>
+</body>
+
+</html>

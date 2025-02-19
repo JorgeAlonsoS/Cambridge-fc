@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Cambridge FC</title>
+    <link rel="icon" href="../static/img/CAMBRIDGE F.C..jpg" type="image/jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .preview-container {
+            width: 128px;
+            height: 128px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-area {
+            border: 2px dashed #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #f97316;
+            background-color: rgba(249, 115, 22, 0.05);
+        }
+
+        .file-input {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100">
+    <!-- Navegación -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="../static/img/CAMBRIDGE F.C..jpg" alt="Cambridge FC Logo" class="h-12 w-auto">
+                        <span class="ml-2 text-xl font-bold text-orange-600">Cambridge FC</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Registro de Jugador</h2>
+                    <p class="text-gray-600">Únete a la familia Cambridge FC</p>
+                </div>
+
+                <form id="registroForm" class="space-y-6" onsubmit="guardarJugador(event)">
+                    <!-- Foto del Jugador -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-orange-600 mb-4">Foto del Jugador</h3>
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="preview-container">
+                                <img id="preview" src="../static/img/default-player.png" alt="Vista previa">
+                            </div>
+                            <div class="flex-1">
+                                <div class="upload-area p-6 rounded-lg text-center">
+                                    <input type="file" id="foto" name="foto" accept="image/*"
+                                           class="file-input absolute opacity-0 w-full h-full cursor-pointer"
+                                           onchange="previsualizarImagen(this)">
+                                    <i class="fas fa-camera text-3xl text-orange-500 mb-3"></i>
+                                    <p class="text-gray-600">Haz clic para seleccionar una foto</p>
+                                    <p class="text-sm text-gray-400 mt-2">JPG o PNG (Máx. 5MB)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Personal -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-orange-600 mb-4">Información Personal</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Nombres</label>
+                                <input type="text" name="nombres" required
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Apellidos</label>
+                                <input type="text" name="apellidos" required
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
+                                <input type="date" name="fechaNacimiento" required
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Tipo de Documento</label>
+                                <select name="tipoDocumento" required
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                                    <option value="TI">Tarjeta de Identidad</option>
+                                    <option value="CC">Cédula de Ciudadanía</option>
+                                    <option value="CE">Cédula de Extranjería</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Número de Documento</label>
+                                <input type="text" name="numeroDocumento" required
+                                    class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                                <input type="text" name="telefono" required
+                                    class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                                <input type="text" name="email" required
+                                    class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Deportiva -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-orange-600 mb-4">Información Deportiva</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Categoría</label>
+                                <select name="categoria" required
+                                    class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 px-3 py-2">
+                                    <option value="sub8">Sub-8</option>
+                                    <option value="sub10">Sub-10</option>
+                                    <option value="sub12">Sub-12</option>
+                                    <option value="sub14">Sub-14</option>
+                                    <option value="sub16">Sub-16</option>
+                                    <option value="sub18">Sub-18</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Posición Principal</label>
+                                <select name="posicion" required
+                                    class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 px-3 py-2">
+                                    <option value="portero">Portero</option>
+                                    <option value="defensa">Defensa</option>
+                                    <option value="mediocampista">Mediocampista</option>
+                                    <option value="delantero">Delantero</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Dorsal Preferido</label>
+                                <input type="text" name="dorsal" 
+                                    class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-4 pt-6">
+                        <button type="button" onclick="window.location.href='index.html'"
+                            class="px-6 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 bg-orange-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                            Registrar Jugador
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function previsualizarImagen(input) {
+            const preview = document.getElementById('preview');
+            const file = input.files[0];
+            
+            if (file) {
+                // Verificar el tamaño del archivo (5MB máximo)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('La imagen no debe superar los 5MB');
+                    input.value = '';
+                    return;
+                }
+
+                // Verificar el tipo de archivo
+                if (!file.type.startsWith('image/')) {
+                    alert('Por favor, selecciona un archivo de imagen válido (JPG o PNG)');
+                    input.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function validarCampos(jugador) {
+            const errores = [];
+
+            // Validaciones de campos obligatorios
+            const camposObligatorios = [
+                { campo: 'nombres', mensaje: 'Los nombres son obligatorios' },
+                { campo: 'apellidos', mensaje: 'Los apellidos son obligatorios' },
+                { campo: 'fechaNacimiento', mensaje: 'La fecha de nacimiento es obligatoria' },
+                { campo: 'tipoDocumento', mensaje: 'El tipo de documento es obligatorio' },
+                { campo: 'numeroDocumento', mensaje: 'El número de documento es obligatorio' },
+                { campo: 'telefono', mensaje: 'El teléfono es obligatorio' },
+                { campo: 'email', mensaje: 'El correo electrónico es obligatorio' },
+                { campo: 'categoria', mensaje: 'La categoría es obligatoria' },
+                { campo: 'posicion', mensaje: 'La posición es obligatoria' }
+            ];
+
+            camposObligatorios.forEach(({ campo, mensaje }) => {
+                if (!jugador[campo] || jugador[campo].trim() === '') {
+                    errores.push(mensaje);
+                }
+            });
+
+            // Validación de correo electrónico
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(jugador.email)) {
+                errores.push('El formato del correo electrónico no es válido');
+            }
+
+            // Validación de edad
+            const fechaNac = new Date(jugador.fechaNacimiento);
+            const hoy = new Date();
+            const edad = hoy.getFullYear() - fechaNac.getFullYear();
+            if (edad < 6 || edad > 18) {
+                errores.push('La edad debe estar entre 6 y 18 años');
+            }
+
+            // Validación de teléfono (solo números)
+            const telefonoRegex = /^[0-9]+$/;
+            if (!telefonoRegex.test(jugador.telefono)) {
+                errores.push('El teléfono debe contener solo números');
+            }
+
+            return errores;
+        }
+
+        function guardarJugadorFinal(jugador) {
+            try {
+                // Validar campos
+                const errores = validarCampos(jugador);
+                if (errores.length > 0) {
+                    throw new Error(errores.join('\n'));
+                }
+
+                // Obtener jugadores existentes
+                let jugadores = JSON.parse(localStorage.getItem('jugadores') || '[]');
+                
+                // Verificar si ya existe un jugador con este número de documento
+                const jugadorExistente = jugadores.find(j => j.numeroDocumento === jugador.numeroDocumento);
+                if (jugadorExistente) {
+                    throw new Error('Ya existe un jugador registrado con este número de documento');
+                }
+
+                // Agregar nuevo jugador
+                jugadores.push(jugador);
+                
+                // Guardar en localStorage
+                localStorage.setItem('jugadores', JSON.stringify(jugadores));
+
+                // Mostrar mensaje de éxito
+                const mensaje = document.createElement('div');
+                mensaje.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                mensaje.textContent = '¡Registro exitoso!';
+                document.body.appendChild(mensaje);
+                
+                // Eliminar mensaje después de 3 segundos
+                setTimeout(() => {
+                    mensaje.remove();
+                }, 3000);
+                
+                // Redireccionar a la página de jugadores
+                window.location.href = 'players.html';
+
+            } catch (error) {
+                console.error('Error al guardar el jugador:', error);
+                
+                // Mostrar mensaje de error personalizado
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                errorDiv.textContent = error.message || 'Hubo un error al guardar el jugador';
+                document.body.appendChild(errorDiv);
+                
+                // Eliminar mensaje de error después de 5 segundos
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 5000);
+            }
+        }
+
+        async function guardarJugador(event) {
+            event.preventDefault();
+            
+            try {
+                const formData = new FormData(event.target);
+                const jugador = {};
+                
+                // Convertir FormData a objeto
+                formData.forEach((value, key) => {
+                    if (key !== 'foto') {
+                        jugador[key] = value.trim();
+                    }
+                });
+                
+                // Calcular edad
+                const fechaNac = new Date(jugador.fechaNacimiento);
+                const hoy = new Date();
+                const edad = hoy.getFullYear() - fechaNac.getFullYear();
+                jugador.edad = edad;
+
+                // Manejar la foto
+                const fotoInput = document.getElementById('foto');
+                if (fotoInput.files.length > 0) {
+                    const file = fotoInput.files[0];
+                    
+                    // Validar tamaño de imagen (máximo 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        throw new Error('La imagen no debe superar los 5MB');
+                    }
+
+                    // Validar tipo de imagen
+                    const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+                    if (!tiposPermitidos.includes(file.type)) {
+                        throw new Error('Solo se permiten imágenes JPG, PNG o GIF');
+                    }
+
+                    // Convertir imagen a base64
+                    const base64Image = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+
+                    // Usar imagen base64 directamente
+                    jugador.foto = base64Image;
+                } else {
+                    // Usar imagen por defecto si no se selecciona imagen
+                    jugador.foto = '../static/img/default-player.png';
+                }
+
+                // Guardar jugador
+                guardarJugadorFinal(jugador);
+
+            } catch (error) {
+                console.error('Error al procesar el registro:', error);
+                
+                // Mostrar mensaje de error
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                errorDiv.textContent = error.message || 'Hubo un error al procesar el registro';
+                document.body.appendChild(errorDiv);
+                
+                // Eliminar mensaje de error después de 5 segundos
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

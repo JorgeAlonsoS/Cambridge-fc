@@ -1,0 +1,180 @@
+/* Animaciones mejoradas con mayor fluidez */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pop-on-hover:hover {
+    animation: pop 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Efectos de Hover mejorados con interactividad sutil */
+.hover-scale {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.hover-scale:hover {
+    transform: scale(1.1);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Paleta de colores refinada */
+:root {
+    --primary-color: #FF6B00; /* Naranja profundo */
+    --secondary-color: #F5F5F5; /* Blanco humo */
+    --accent-color: #1E1F26; /* Negro azulado */
+    --background-color: #FFF3DA; /* Crema más cálida */
+    --text-color: #2A2D34; /* Gris oscuro */
+    --card-background: rgba(255, 255, 255, 0.85);
+    --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos generales mejorados */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor con mayor flexibilidad */
+.players-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    align-items: start;
+}
+
+/* Tarjetas con efecto Glassmorphism mejorado */
+.player-card {
+    background: var(--card-background);
+    border-radius: 18px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.player-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Imagen del jugador mejorada */
+.player-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom: 5px solid var(--primary-color);
+    transition: filter 0.3s ease-in-out;
+}
+
+.player-card:hover img {
+    filter: brightness(1.1);
+}
+
+/* Contenido de la tarjeta */
+.player-card-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.player-card-content h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.player-card-content p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+/* Badge de categoría con efecto sutil */
+.player-card-category {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease-in-out;
+}
+
+.player-card:hover .player-card-category {
+    transform: scale(1.1);
+}
+
+/* Botones con efecto más dinámico */
+.button {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    font-size: 1rem;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.button:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    transform: translateY(-4px) scale(1.05);
+}
+
+/* Encabezados mejorados */
+h1, h2, h3 {
+    color: var(--primary-color);
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Enlaces con mejor interacción */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+a:hover {
+    color: var(--accent-color);
+    transform: scale(1.05);
+}

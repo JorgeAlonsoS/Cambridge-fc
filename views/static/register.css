@@ -1,0 +1,271 @@
+:root {
+    --primary-color: #FF6B00;
+    --secondary-color: #4CAF50;
+    --accent-color: #FFD700;
+    --background-color: #F5F5F5;
+    --text-color: #333333;
+    --error-color: #FF4444;
+    --success-color: #4CAF50;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color), #FF8533);
+    padding: 2rem;
+}
+
+.register-container {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 800px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.register-header {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(to right, rgba(255,107,0,0.1), rgba(255,133,51,0.1));
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.register-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.register-subtitle {
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+.register-content {
+    padding: 2rem;
+}
+
+/* Pasos del registro */
+.register-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.register-steps::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ddd;
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    background: white;
+    padding: 0 1rem;
+}
+
+.step i {
+    width: 50px;
+    height: 50px;
+    background: #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.step.active i {
+    background: var(--primary-color);
+    box-shadow: 0 0 0 5px rgba(255,107,0,0.2);
+}
+
+.step.completed i {
+    background: var(--success-color);
+}
+
+/* Formulario */
+.form-step {
+    display: none;
+    animation: slideIn 0.3s ease-out;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group i {
+    position: absolute;
+    left: 1rem;
+    color: var(--primary-color);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+    outline: none;
+}
+
+/* Botones de navegación */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.btn-prev,
+.btn-next,
+.btn-submit {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-prev {
+    background: #f5f5f5;
+    color: var(--text-color);
+}
+
+.btn-next,
+.btn-submit {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-prev:hover {
+    background: #e5e5e5;
+}
+
+.btn-next:hover,
+.btn-submit:hover {
+    background: #FF8533;
+    transform: translateY(-2px);
+}
+
+/* Términos y condiciones */
+.terms-container {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.terms-content {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    background: white;
+}
+
+/* Checkbox personalizado */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register-page {
+        padding: 1rem;
+    }
+
+    .register-steps {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .register-steps::before {
+        display: none;
+    }
+
+    .step {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-prev,
+    .btn-next,
+    .btn-submit {
+        width: 100%;
+        justify-content: center;
+    }
+} 

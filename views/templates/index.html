@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Cambridge Football Club - Escuela de fútbol profesional en Ocaña, formando campeones dentro y fuera de la cancha">
+    <meta name="keywords" content="fútbol, escuela de fútbol, Cambridge FC, Ocaña, deporte, formación deportiva">
+    <title>Cambridge FC Ocaña - Escuela de Fútbol</title>
+    <link rel="icon" href="../static/img/CAMBRIDGE F.C..jpg" type="image/jpg">
+
+    <!-- Estilos críticos inline para el primer render -->
+    <style>
+        /* Estilos para el fondo y efectos */
+        .hero-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url('../static/img/CAMBRIDGE F.C..jpg') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    rgba(0, 0, 0, 0.6) 50%,
+                    rgba(0, 0, 0, 0.8) 100%);
+            z-index: -1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .nav-link {
+            @apply flex items-center text-white hover:text-orange-400 transition-colors group py-2;
+        }
+
+        .nav-link i {
+            @apply opacity-80 group-hover:text-yellow-300 transition-colors;
+        }
+
+        .nav-link span {
+            @apply ml-2 font-medium;
+        }
+
+        .nav-link-special {
+            @apply flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all transform hover:scale-105 shadow-md;
+        }
+
+        .nav-link-special i {
+            @apply opacity-90 group-hover:text-yellow-300;
+        }
+
+        .nav-link-special span {
+            @apply ml-2 font-semibold;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                position: fixed;
+                top: 64px;
+            }
+
+            .nav-link {
+                @apply w-full px-4 py-3;
+                border-radius: 0.5rem;
+            }
+
+            .nav-link:hover,
+            .nav-link:focus {
+                @apply bg-white/10;
+            }
+
+            .mobile-menu .nav-link {
+                display: flex;
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .mobile-menu .nav-link-special {
+                margin-top: 1rem;
+            }
+        }
+
+        .hamburger-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger-icon.active {
+            transform: rotate(90deg);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 107, 43, 0.5);
+        }
+
+        .button-glow {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #FF6B2B, #FF8C42);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 43, 0.3);
+        }
+
+        .button-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 43, 0.4);
+        }
+
+        .button-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(rgba(255, 255, 255, 0.2),
+                    rgba(255, 255, 255, 0));
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+
+        .button-glow:hover::after {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        /* Estilos para el footer */
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: translateY(-98%);
+        }
+
+        .footer-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 50px;
+        }
+
+        .footer-glass {
+            background: rgba(255, 107, 43, 0.1);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-link {
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #FF6B2B;
+            transform: translateX(5px);
+        }
+
+        .social-icon {
+            @apply flex items-center justify-center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .social-icon img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Estilo específico para Facebook */
+        .social-icon.facebook {
+            background: linear-gradient(45deg, #3b5998, #4c70ba);
+        }
+
+        .social-icon.facebook:hover {
+            box-shadow: 0 4px 15px rgba(59, 89, 152, 0.4);
+        }
+
+        /* Estilo específico para WhatsApp */
+        .social-icon.whatsapp {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+        }
+
+        .social-icon.whatsapp:hover {
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .social-icon.whatsapp img {
+            padding: 4px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Estilo para el texto destacado */
+        .text-gradient-glow {
+            background: linear-gradient(45deg, #FF6B2B, #FFD700, #FF6B2B);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite, glow 2s ease-in-out infinite;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 107, 43, 0.5);
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(255, 107, 43, 0.5));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.7));
+            }
+        }
+
+        /* Estilos base */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Menú móvil */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            padding: 1rem;
+            z-index: 50;
+        }
+
+        #mobile-menu.show {
+            display: block;
+        }
+
+        /* Enlaces de navegación */
+        .nav-link {
+            @apply flex items-center text-white hover:text-orange-400 transition-colors group py-2;
+        }
+
+        .nav-link i {
+            @apply opacity-80 group-hover:text-yellow-300 transition-colors;
+        }
+
+        .nav-link span {
+            @apply ml-2 font-medium;
+        }
+
+        .nav-link-special {
+            @apply flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all transform hover:scale-105 shadow-md;
+        }
+
+        /* Estilos móviles */
+        @media (max-width: 768px) {
+            #mobile-menu .nav-link {
+                display: block;
+                width: 100%;
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+                border-radius: 0.5rem;
+            }
+
+            #mobile-menu .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            #mobile-menu .nav-link-special {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+        }
+
+        /* Menú móvil mejorado */
+        #mobile-menu {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            z-index: 50;
+            display: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            #mobile-menu .nav-link {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                padding: 1rem 1.5rem;
+                margin-bottom: 0.5rem;
+                border-radius: 0.75rem;
+                background: rgba(255, 255, 255, 0.05);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            #mobile-menu .nav-link:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(10px);
+            }
+
+            #mobile-menu .nav-link i {
+                font-size: 1.25rem;
+                width: 2rem;
+                text-align: center;
+                margin-right: 1rem;
+                transition: all 0.3s ease;
+            }
+
+            #mobile-menu .nav-link:hover i {
+                transform: scale(1.2);
+            }
+
+            #mobile-menu .nav-link span {
+                font-weight: 500;
+            }
+
+            #mobile-menu .nav-link-special {
+                background: linear-gradient(135deg, #FF6B2B, #FF8C42);
+                margin-top: 1rem;
+                justify-content: center;
+                transform-origin: center;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            #mobile-menu .nav-link-special:hover {
+                background: linear-gradient(135deg, #FF8C42, #FF6B2B);
+                transform: scale(1.05);
+                box-shadow: 0 4px 15px rgba(255, 107, 43, 0.3);
+            }
+
+            /* Animación del botón hamburguesa */
+            #menu-toggle {
+                padding: 0.5rem;
+                border-radius: 0.5rem;
+                transition: all 0.3s ease;
+            }
+
+            #menu-toggle:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            #menu-toggle i {
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            /* Efectos de hover y feedback táctil */
+            .nav-link:active {
+                transform: scale(0.98);
+            }
+
+            /* Indicador de scroll */
+            .scroll-indicator {
+                position: absolute;
+                bottom: 1rem;
+                left: 50%;
+                transform: translateX(-50%);
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 0.875rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .scroll-indicator i {
+                animation: bounce 2s infinite;
+            }
+
+            @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-5px);
+                }
+                60% {
+                    transform: translateY(-3px);
+                }
+            }
+        }
+    </style>
+
+    <!-- Cargar Tailwind de forma optimizada -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Cargar solo los íconos necesarios de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css">
+
+    <!-- Scripts necesarios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="text-white">
+    <!-- Fondo fijo -->
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+        <!-- Navegación con efecto glass -->
+        <nav class="nav-glass fixed w-full z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <img src="../static/img/CAMBRIDGE F.C..jpg" alt="Logo Cambridge FC" class="h-10 w-auto">
+                        <span class="ml-4 text-xl font-bold text-glow">Cambridge FC</span>
+                    </div>
+
+                    <!-- Menú Desktop -->
+                    <div class="hidden md:flex items-center justify-center gap-6">
+                        <!-- Navegación Principal -->
+                        <div class="flex items-center space-x-6">
+                            <a href="#inicio" class="nav-link">
+                                <i class="fas fa-home text-sm w-5 text-center"></i>
+                                <span>Inicio</span>
+                            </a>
+                            <a href="#nosotros" class="nav-link">
+                                <i class="fas fa-users-cog text-sm w-5 text-center"></i>
+                                <span>Nosotros</span>
+                            </a>
+                            <a href="#programas" class="nav-link">
+                                <i class="fas fa-futbol text-sm w-5 text-center"></i>
+                                <span>Programas</span>
+                            </a>
+                        </div>
+
+                        <!-- Navegación Secundaria -->
+                        <div class="flex items-center space-x-6">
+                            <a href="players.html" class="nav-link">
+                                <i class="fas fa-running text-sm w-5 text-center"></i>
+                                <span>Jugadores</span>
+                            </a>
+                            <a href="triunfos.html" class="nav-link relative">
+                                <i class="fas fa-trophy text-sm w-5 text-center"></i>
+                                <span>Triunfos</span>
+                                <span class="absolute -top-1 -right-1 h-2 w-2 bg-orange-500 rounded-full animate-ping"></span>
+                            </a>
+                        </div>
+
+                        <!-- Acciones -->
+                        <div class="flex items-center space-x-6">
+                            <a href="pago.html" class="nav-link">
+                                <i class="fas fa-credit-card text-sm w-5 text-center"></i>
+                                <span>Pago</span>
+                            </a>
+                            <a href="register.html" class="nav-link">
+                                <i class="fas fa-user-plus text-sm w-5 text-center"></i>
+                                <span>Registrar</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Botón menú móvil -->
+                    <button class="md:hidden text-white" id="menu-toggle">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menú Móvil -->
+            <div id="mobile-menu">
+                <div class="space-y-2">
+                    <!-- Navegación Principal -->
+                    <a href="#inicio" class="nav-link">
+                        <i class="fas fa-home text-sm w-5 text-center"></i>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="#nosotros" class="nav-link">
+                        <i class="fas fa-users-cog text-sm w-5 text-center"></i>
+                        <span>Nosotros</span>
+                    </a>
+                    <a href="#programas" class="nav-link">
+                        <i class="fas fa-futbol text-sm w-5 text-center"></i>
+                        <span>Programas</span>
+                    </a>
+
+                    <a href="players.html" class="nav-link">
+                        <i class="fas fa-running text-sm w-5 text-center"></i>
+                        <span>Jugadores</span>
+                    </a>
+                    <a href="triunfos.html" class="nav-link">
+                        <i class="fas fa-trophy text-sm w-5 text-center"></i>
+                        <span>Triunfos</span>
+                    </a>
+
+                    <!-- Acciones -->
+                    <a href="pago.html" class="nav-link">
+                        <i class="fas fa-credit-card text-sm w-5 text-center"></i>
+                        <span>Pago</span>
+                    </a>
+                    <a href="register.html" class="nav-link w-full">
+                        <i class="fas fa-user-plus text-sm w-5 text-center"></i>
+                        <span>Registrar</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="inicio" class="min-h-screen flex items-center justify-center text-center px-4">
+            <div class="max-w-4xl">
+                <h1 class="text-6xl md:text-7xl font-bold mb-6 text-glow">
+                    CAMBRIDGE FC OCAÑA
+                </h1>
+                <p class="text-3xl mb-8 text-gradient-glow">
+                    CUNA DE CAMPEONES
+                </p>
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <a href="register.html" class="button-glow">
+                        <i class="fas fa-user-plus mr-2"></i>Únete Ahora
+                    </a>
+                    <a href="#programas" class="button-glow bg-white bg-opacity-20">
+                        <i class="fas fa-info-circle mr-2"></i>Conoce Más
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Nosotros -->
+        <section id="nosotros" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="glass-card">
+                        <h2 class="text-3xl font-bold mb-6 text-glow">Nuestra Misión</h2>
+                        <p class="text-gray-200 leading-relaxed">
+                            En Cambridge FC nos dedicamos a formar jugadores integrales,
+                            combinando excelencia deportiva con valores fundamentales.
+                            Nuestro compromiso es desarrollar no solo grandes deportistas,
+                            sino también grandes seres humanos.
+                        </p>
+                    </div>
+                    <div class="glass-card">
+                        <h2 class="text-3xl font-bold mb-6 text-glow">Nuestros Valores</h2>
+                        <ul class="space-y-4 text-gray-200">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-orange-400 mr-2"></i>
+                                Disciplina y Compromiso
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-orange-400 mr-2"></i>
+                                Trabajo en Equipo
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-orange-400 mr-2"></i>
+                                Respeto y Deportividad
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Estadísticas -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="glass-card text-center">
+                        <i class="fas fa-users text-4xl text-orange-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2">200+</h3>
+                        <p>Jugadores Formados</p>
+                    </div>
+                    <div class="glass-card text-center">
+                        <i class="fas fa-trophy text-4xl text-orange-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2">50+</h3>
+                        <p>Torneos Ganados</p>
+                    </div>
+                    <div class="glass-card text-center">
+                        <i class="fas fa-star text-4xl text-orange-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2">15+</h3>
+                        <p>Años de Experiencia</p>
+                    </div>
+                    <div class="glass-card text-center">
+                        <i class="fas fa-graduation-cap text-4xl text-orange-400 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2">100+</h3>
+                        <p>Graduados Profesionales</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer Mejorado -->
+    <footer class="relative mt-20">
+        <!-- Divisor con efecto de onda -->
+        <div class="footer-wave">
+            <svg preserveAspectRatio="none" width="100%" height="50" viewBox="0 0 1200 120"
+                xmlns="http://www.w3.org/2000/svg" style="fill: rgba(255, 107, 43, 0.1);">
+                <path
+                    d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                    opacity=".25" />
+                <path
+                    d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+                    opacity=".5" />
+                <path
+                    d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" />
+            </svg>
+        </div>
+
+        <!-- Contenido del Footer -->
+        <div class="footer-glass">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Logo y Descripción -->
+                    <div class="col-span-1 md:col-span-2">
+                        <div class="flex items-center mb-4">
+                            <img src="../static/img/CAMBRIDGE F.C..jpg" alt="Cambridge FC Logo"
+                                class="h-12 w-auto mr-3 rounded-full">
+                            <h3 class="text-2xl font-bold text-glow">Cambridge FC</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6">
+                            Formando campeones dentro y fuera de la cancha.
+                            Comprometidos con el desarrollo integral de nuestros jugadores.
+                            #CUNA DE CAMPEONES
+                        </p>
+                        <div class="flex space-x-6 items-center">
+                            <a href="https://www.facebook.com/cambrigde.fc" class="social-icon facebook" target="_blank" rel="noopener noreferrer">
+                                <img src="../static/img/facebook-logo-facebook-icon-transparent-free-png.webp" alt="Facebook">
+                            </a>
+                            <a href="https://wa.me/573154369571" class="social-icon whatsapp" target="_blank" rel="noopener noreferrer">
+                                <img src="../static/img/pngtree-whatsapp-icon-png-image_3584844.jpg" alt="WhatsApp">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Enlaces Rápidos -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-glow">Enlaces Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="index.html" class="footer-link text-gray-300 flex items-center">
+                                    <i class="fas fa-chevron-right mr-2 text-orange-400 text-sm"></i>Inicio
+                                </a>
+                            </li>
+                            <li>
+                                <a href="register.html" class="footer-link text-gray-300 flex items-center">
+                                    <i class="fas fa-chevron-right mr-2 text-orange-400 text-sm"></i>Registro
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pago.html" class="footer-link text-gray-300 flex items-center">
+                                    <i class="fas fa-chevron-right mr-2 text-orange-400 text-sm"></i>Pagos
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-glow">Contacto</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300 hover:text-orange-400 transition-colors">
+                                <i class="fas fa-map-marker-alt text-orange-400 mr-3"></i>
+                                Ocaña, Norte de Santander
+                            </li>
+                            <li class="flex items-center text-gray-300 hover:text-orange-400 transition-colors">
+                                <i class="fas fa-phone text-orange-400 mr-3"></i>
+                                +57 317 341 9829
+                            </li>
+                            <li class="flex items-center text-gray-300 hover:text-orange-400 transition-colors">
+                                <i class="fas fa-envelope text-orange-400 mr-3"></i>
+                                cambridgefcocana@gmail.com
+                            </li>
+                            <li class="flex items-center text-gray-300 hover:text-orange-400 transition-colors">
+                                <i class="fas fa-clock text-orange-400 mr-3"></i>
+                                Lunes a Viernes
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Línea divisoria y copyright -->
+                <div class="border-t border-gray-700/30 mt-12 pt-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <p class="text-gray-400 text-sm">
+                            2025 Jorge Alberto Alonso Sumalave. Todos los derechos reservados.
+                        </p>
+                        <div class="flex space-x-4 mt-4 md:mt-0">
+                            <a href="#" class="text-gray-400 hover:text-orange-400 text-sm transition-colors">Términos y
+                                Condiciones</a>
+                            <span class="text-gray-600">|</span>
+                            <a href="#" class="text-gray-400 hover:text-orange-400 text-sm transition-colors">Política
+                                de Privacidad</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de inicialización optimizado -->
+    <script>
+        // Función para manejar la carga de imágenes
+        function handleImageLoading() {
+            const images = document.querySelectorAll('img[data-src]');
+            if ('loading' in HTMLImageElement.prototype) {
+                // Usar loading="lazy" nativo si está disponible
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                    img.loading = 'lazy';
+                });
+            } else {
+                // Fallback a IntersectionObserver
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+                images.forEach(img => imageObserver.observe(img));
+            }
+        }
+
+        // Función simple para animaciones al scroll
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('[data-animate]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Inicialización optimizada
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ocultar loader
+            const loader = document.getElementById('pageLoader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+
+            // Inicializar funcionalidades
+            handleImageLoading();
+            handleScrollAnimations();
+
+            // Navegación fija optimizada
+            let lastScroll = 0;
+            const nav = document.querySelector('nav');
+            if (nav) {
+                window.addEventListener('scroll', () => {
+                    requestAnimationFrame(() => {
+                        const currentScroll = window.pageYOffset;
+                        if (currentScroll > lastScroll && currentScroll > 100) {
+                            nav.classList.add('nav-fixed');
+                        } else if (currentScroll < lastScroll) {
+                            nav.classList.remove('nav-fixed');
+                        }
+                        lastScroll = currentScroll;
+                    });
+                });
+            }
+
+            // Manejo del menú móvil
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('show');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
